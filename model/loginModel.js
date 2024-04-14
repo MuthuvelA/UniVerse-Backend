@@ -8,8 +8,7 @@ const userSchema = new Schema({
       type:String,
       unique:true,
       required:true
-    }
-    ,
+    },
     password:{
         type:String,
         required:true
@@ -17,6 +16,7 @@ const userSchema = new Schema({
 });
 
 
-const userModel = db.model('loginStudent',userSchema);
+const 
+loginModel = db.model('loginstudentdb',userSchema);
 
-module.exports = userModel;
+module.exports = loginModel;
