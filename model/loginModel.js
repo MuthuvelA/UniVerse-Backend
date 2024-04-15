@@ -17,6 +17,6 @@ const userSchema = new Schema({
 
 
 const 
-loginModel = db.model('loginstudentdb',userSchema);
+loginModel = db.model('loginstudentdbs',userSchema);
 
 module.exports = loginModel;
