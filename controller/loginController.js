@@ -4,7 +4,9 @@ const loginService = require('../service/loginService');
 exports.login = async (req, res) => {
     try {
         const { rollno, password } = req.body;
-        
+exports.login = async (req, res) => {
+    try {
+        const { rollno, password } = req.body;
         const user = await loginService.userLogin(rollno, password);
         if (user) {
             res.json({ status: true, message: "Login successful" });
