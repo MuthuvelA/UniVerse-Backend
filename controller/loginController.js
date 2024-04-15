@@ -1,5 +1,9 @@
 const loginService = require('../service/loginService');
 
+
+exports.login = async (req, res) => {
+    try {
+        const { rollno, password } = req.body;
 exports.login = async (req, res) => {
     try {
         const { rollno, password } = req.body;
