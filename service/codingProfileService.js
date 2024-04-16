@@ -2,17 +2,8 @@ const { default: axios } = require('axios');
 const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
 class CodingProfile{
-    static async addProfile(details){
-        
-    }
-
-    static async getLeetcode(username){ 
-        try {
-            
-        } catch (error) {
-            
-        }
-    }
+    
+    
 }
 
 class validateProfile{
