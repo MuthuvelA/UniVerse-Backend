@@ -5,10 +5,11 @@ const service = require('../service/studentDetailService');
 async function formateData(data,details){
   const newData = [];
   for(let idx = 0;idx<data.length;idx++){
-    const obj = {sno:idx+1};
-    details.personal.forEach(element => {
-      obj[`${element}`] = ((data[idx][`${element}`]==null ||data[idx][`${element}`]=="") ?"NIL":data[idx][`${element}`]);
-    });
+    const obj = {
+      sno:idx+1,
+      name:((data[idx]["name"]==null ||data[idx]["name"]=="") ?"NIL":data[idx]["name"]),
+      rollNo:((data[idx]["rollNo"]==null ||data[idx]["rollNo"]=="") ?"NIL":data[idx]["rollNo"])
+    };
     details.coding.forEach((element)=>{
       if(element=="leetcode"){
         obj["leetcodeEasy"] = data[idx].codingDetails[0].problemSolved.leetcodeEasy;
@@ -27,41 +28,58 @@ async function formateData(data,details){
         obj["codeforcesRating"] = data[idx].codingDetails[2].contest.codeforcesRating;
       }
     });
+    details.personal.forEach(element => {
+      if(element!="name" && element!="rollNo"){
+      obj[`${element}`] = ((data[idx][`${element}`]==null ||data[idx][`${element}`]=="") ?"NIL":data[idx][`${element}`]);
+      }
+    });
     newData.push(obj);
   }
   return newData;
 }
 
+
 async function formateColumn(obj,data){
   var column = [
-      {header:"SNo",key:"sno",width:5}
+      {header:"SNo",key:"sno",width:5},
   ];
+  const constDetails = ["rollNo","name"];
+  constDetails.forEach(element => {
+    var maxLength = element.length+5;
+    data.forEach((value)=>{
+        if(value[`${element}`]!=null && (value[`${element}`]).toString().length>maxLength) maxLength = (value[`${element}`]).toString().length;
+    });
+    const newHeader = {header:`${element}`,key:`${element}`,width:maxLength+5};
+    column.push(newHeader);
+});
+
+  obj.coding.forEach((value)=>{
+    if(value=="leetcode"){
+        column.push({header:"",key:"leetcodeEasy",width:10});
+        column.push({header:"",key:"leetcodeMedium",width:10});
+        column.push({header:"",key:"leetcodeHard",width:10});
+        column.push({header:"",key:"leetcodeNoContest",width:20});
+        column.push({header:"",key:"leetcodeRating",width:10});
+    }
+    if(value=="codechef"){
+        column.push({header:"",key:"codechefTotal",width:20});
+        column.push({header:"",key:"codechefNoContest",width:20});
+        column.push({header:"",key:"codechefRating",width:20});
+    }
+    if(value=="codeforces"){
+        column.push({header:"",key:"codeforcesTotal",width:20});
+        column.push({header:"",key:"codeforcesRating",width:20});
+    }
+});
   obj.personal.forEach(element => {
+    if(element!="name" && element!="rollNo"){
       var maxLength = element.length+5;
       data.forEach((value)=>{
           if(value[`${element}`]!=null && (value[`${element}`]).toString().length>maxLength) maxLength = (value[`${element}`]).toString().length;
       });
       const newHeader = {header:`${element}`,key:`${element}`,width:maxLength+5};
       column.push(newHeader);
-  });
-
-  obj.coding.forEach((value)=>{
-          if(value=="leetcode"){
-              column.push({header:"",key:"leetcodeEasy",width:10});
-              column.push({header:"",key:"leetcodeMedium",width:10});
-              column.push({header:"",key:"leetcodeHard",width:10});
-              column.push({header:"",key:"leetcodeNoContest",width:20});
-              column.push({header:"",key:"leetcodeRating",width:10});
-          }
-          if(value=="codechef"){
-              column.push({header:"",key:"codechefTotal",width:20});
-              column.push({header:"",key:"codechefNoContest",width:20});
-              column.push({header:"",key:"codechefRating",width:20});
-          }
-          if(value=="codeforces"){
-              column.push({header:"",key:"codeforcesTotal",width:20});
-              column.push({header:"",key:"codeforcesRating",width:20});
-          }
+    }
   });
   
   return column;
@@ -73,11 +91,10 @@ async function createExcelWithSubcolumns(column,data,details) {
   const worksheet = workbook.addWorksheet("Sheet1");
 
   worksheet.columns = column;
-  var curIdx = details.personal.length+65;
-  details.coding.forEach((value)=>{
+  var curIdx = 67;
+  details.coding.forEach(async(value)=>{
       if(value=="leetcode"){
-          console.log(String.fromCharCode(curIdx,49));
-          worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+5,49)}`);
+          worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+3,49)}`);
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49)}`).value = "Leetcode";
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49+1)}`).value = "Easy";
           worksheet.getCell(`${String.fromCharCode(curIdx+2,49+1)}`).value = "Medium";
@@ -101,9 +118,9 @@ async function createExcelWithSubcolumns(column,data,details) {
           worksheet.getCell(`${String.fromCharCode(curIdx+2,49+1)}`).value = "rating";
           curIdx+=2;
       }
-  })
+  });
 worksheet.addRows(data);
-// await workbook.xlsx.writeFile(`newExcel${Date.now()}.xlsx`);
+await workbook.xlsx.writeFile(`newExcel${Date.now()}.xlsx`);
 const buffer = await workbook.xlsx.writeBuffer();
 return buffer.toString('base64');
 }
