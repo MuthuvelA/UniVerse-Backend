@@ -1,4 +1,3 @@
-const { reset } = require("nodemon");
 const { validateProfile } = require("../service/codingProfileService")
 
 exports.validateLeetcode = async(req,res)=>{
