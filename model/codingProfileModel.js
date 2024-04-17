@@ -9,9 +9,20 @@ const codingProfileModel = new Schema({
         required:true,
         unique:true
     },
+    department:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    year:{
+        type:String,
+        required:true,
+        unique:true
+    },
     details:{
         platform:{
             type:String,
+            default:""
         },
         contest:{
             noContest:{

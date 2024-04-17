@@ -6,16 +6,21 @@ const { Schema } = mongo;
 const studentDetailModel = new Schema({
     name: {
         type: String,
-        required: true
     },
-    rollno:{
+    department:{
+        type:String
+    },
+    section:{
+        type:String
+    },
+    rollNo:{
         type:String,
         required:true,
         unique:true
     },
-    currentyear:{
+    currentYear:{
         type:String,
-        required:true
+        default:""
     },
     department:{
         type:String,
@@ -23,93 +28,98 @@ const studentDetailModel = new Schema({
     },
     emailAddress: {
         type: String,
-        required: true,
-        unique: true
+        default:""
     },
     phoneNumber: {
         type: String,
-        required: true,
-        unique:true
+        default:""
     },
     dateOfBirth: {
-        type: String,
-        required: true
+        type: Date,
+        default:""
     },
     address: {
         type: String,
-        required: true
+        default:""
     },
-    parentName: {
+    fatherName: {
         type: String,
-        required: true
+        default:""
     },
     motherName: {
         type: String,
-        required: true
+        default:""
     },
     bloodGroup: {
         type: String,
-        required: true
+        default:""
     },
     leetCode: {
         type: String,
-        required: true,
-        unique: true
+        default:""
     },
     codeChef:{
         type: String,
-        required: true,
-        unique: true
+        default:""
     },
     codeforces: {
         type: String,
-        required: true,
-        unique: true
+        default:""
     },
     aadhaarCardNumber: {
         type: String,
-        required: true,
-        unique: true
+        default:""
     },
     aadhaarCardLink: {
         type: String,
-        required: true,
+        default:""
     },
     panCardNumber: {
         type: String,
-        unique: true
+        unique: true,
+        default:""
     },
     panCardLink: {
         type: String,
-        required: true,
+        default:""
     },
     drivingLicenseNumber: {
         type: String,
-        unique:true
+        unique: true,
+        default:""
     },
     drivingLicenseLink: {
         type: String,
+        default:""
     },
     voterIdNumber: {
         type: String,
-        unique: true
+        unique: true,
+        default:""
     },
     voterIdLink:  {
         type: String,
     },
     passportNumber: {
         type: String,
-        unique: true
+        unique: true,
+        default:""
     },
     passportLink: {
         type:String,
+        default:""
     },
     bankAccountNumber: {
         type: String,
-        unique: true
+        unique: true,
+        default:""
     },
     bankAccountLink: {
-        type:String
+        type:String,
+        default:""
+    } ,
+    codingDetails:{
+        type:Array
     }
 });
 

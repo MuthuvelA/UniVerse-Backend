@@ -1,4 +1,5 @@
 const studentDetailService = require('../service/studentDetailService');
+const studentDetailsService = require('../service/studentDetailService');
 
 exports.createStudentDetail = async (req, res) => {
     try {
@@ -53,3 +54,20 @@ exports.updateStudentDetailByRollno = async (req, res) => {
         res.status(500).json({ status: false, message: "Server error" });
     }
 };
+
+
+exports.initUserController = async(req,res)=>{
+      try {
+        const {department,section,currentYear,rollNos} = req.body;
+        rollNos.forEach(async(element)=> {
+            try {
+                await studentDetailService.initUser(department,currentYear,section,element.rollno,element.name);
+            } catch (error) {
+                console.log(error.message);
+            }
+        });
+         res.status(200).json({message:"user Add sucessfully"});
+      } catch (error) {
+        res.status(404).json({error:error.message});
+      }
+}
