@@ -63,56 +63,124 @@ const studentDetailModel = new Schema({
         default:""
     },
     aadhaarCardNumber: {
-        type: String,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     aadhaarCardLink: {
-        type: String,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     panCardNumber: {
-        type: String,
-        unique: true,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     panCardLink: {
-        type: String,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     drivingLicenseNumber: {
-        type: String,
-        unique: true,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     drivingLicenseLink: {
-        type: String,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     voterIdNumber: {
-        type: String,
-        unique: true,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     voterIdLink:  {
-        type: String,
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     passportNumber: {
-        type: String,
-        unique: true,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     passportLink: {
-        type:String,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     bankAccountNumber: {
-        type: String,
-        unique: true,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     },
     bankAccountLink: {
-        type:String,
-        default:""
+        iv:{
+            type:String,
+            default:""
+        },
+        encryptedValue:{
+            type:String,
+            default:""
+        }
     } ,
     codingDetails:{
         type:Array

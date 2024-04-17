@@ -2,16 +2,6 @@ const StudentDetail = require('../model/studentDetailModel');
 const db = require('../config/db');
 
 class studentDetailsService{
-    static async create(studentDetailData){
-        try {
-            const newStudentDetail = await StudentDetail.create(studentDetailData);
-            return newStudentDetail;
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
-    
-    
     static async getByRollno(Rollno){
         try {
             const studentDetail = await StudentDetail.findOne({ rollno:Rollno});
@@ -32,7 +22,8 @@ class studentDetailsService{
     
     static async updateByRollno(rollno, updatedData){
         try {
-            const updatedStudentDetail = await StudentDetail.findOneAndUpdate({ rollno: rollno }, updatedData, { new: true });
+            const collection = db.collection("studentdetaildbs");
+            const updatedStudentDetail = await collection.updateOne({ rollNo: rollno }, {$set:updatedData});
             return updatedStudentDetail;
         } catch (error) {
             throw new Error(error.message);

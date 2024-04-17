@@ -4,7 +4,6 @@ const router = require('express').Router();
 
 
 router.post('/login', loginController.login);
-router.post('/addstudentdetail',studentDetailController.createStudentDetail);
 router.post('/getstudentdetail',studentDetailController.getAllStudentDetails);
 router.post('/updatestudentdetail',studentDetailController.updateStudentDetailByRollno);
 router.post('/getstudentbyrollno',studentDetailController.getStudentDetailByRollno);

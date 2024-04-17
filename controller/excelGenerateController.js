@@ -37,7 +37,7 @@ async function formateColumn(obj,data){
       {header:"SNo",key:"sno",width:5}
   ];
   obj.personal.forEach(element => {
-      var maxLength = 0;
+      var maxLength = element.length+5;
       data.forEach((value)=>{
           if(value[`${element}`]!=null && (value[`${element}`]).toString().length>maxLength) maxLength = (value[`${element}`]).toString().length;
       });
@@ -103,7 +103,7 @@ async function createExcelWithSubcolumns(column,data,details) {
       }
   })
 worksheet.addRows(data);
-await workbook.xlsx.writeFile(`newExcel${Date.now()}.xlsx`);
+// await workbook.xlsx.writeFile(`newExcel${Date.now()}.xlsx`);
 const buffer = await workbook.xlsx.writeBuffer();
 return buffer.toString('base64');
 }
@@ -115,6 +115,7 @@ exports.GenerateExcel = async(req,res)=>{
         const details = req.body;
         const {department,currentYear} = details;
         const data = await studentDetailsService.getByDeptYear({department,currentYear});
+        console.log("DATA  : ",data);
         const formatedData = await formateData(data,details);
         const column = await formateColumn(details,formatedData);
         const base64 = await createExcelWithSubcolumns(column,formatedData,details);
