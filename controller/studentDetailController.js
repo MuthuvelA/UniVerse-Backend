@@ -1,15 +1,4 @@
 const studentDetailService = require('../service/studentDetailService');
-const studentDetailsService = require('../service/studentDetailService');
-
-exports.createStudentDetail = async (req, res) => {
-    try {
-        const newStudentDetail = await studentDetailService.create(req.body);
-        res.status(201).json(newStudentDetail);
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ status: false, message: error.message });
-    }
-};
 
 
 exports.getStudentDetailByRollno = async (req, res) => {
@@ -43,7 +32,7 @@ exports.getStudentDetailByYear = async (req, res) => {
 
 exports.updateStudentDetailByRollno = async (req, res) => {
     try {
-        const updatedStudentDetail = await studentDetailService.updateByRollno(req.body.rollno, req.body);
+        const updatedStudentDetail = await studentDetailService.updateByRollno(req.body.rollNo, req.body.value);
         if (updatedStudentDetail) {
             res.status(200).json(updatedStudentDetail);
         } else {
