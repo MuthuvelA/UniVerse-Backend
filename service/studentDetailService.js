@@ -11,16 +11,6 @@ const create = async (studentDetailData) => {
 };
 
 
-const getAll = async () => {
-    try {
-        const studentDetails = await StudentDetail.find();
-        return studentDetails;
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
-
-
 const getByRollno = async (Rollno) => {
     try {
         const studentDetail = await StudentDetail.findOne({ rollno:Rollno});
@@ -52,9 +42,7 @@ const updateByRollno = async (rollno, updatedData) => {
 
 module.exports = {
     create,
-    getAll,
     getByRollno,
     getByYear,
     updateByRollno,
-    
 };

@@ -10,15 +10,6 @@ exports.createStudentDetail = async (req, res) => {
     }
 };
 
-exports.getAllStudentDetails = async (req, res) => {
-    try {
-        const studentDetails = await studentDetailService.getAll();
-        res.status(200).json(studentDetails);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ status: false, message: "Server error" });
-    }
-};
 
 exports.getStudentDetailByRollno = async (req, res) => {
     try {
