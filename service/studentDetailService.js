@@ -2,6 +2,16 @@ const StudentDetail = require('../model/studentDetailModel');
 const db = require('../config/db');
 
 class studentDetailsService{
+
+  static async getAll(){
+    try {
+      const collection = db.collection("studentdetaildbs");
+      const allDetails = await collection.find({});
+      return  await allDetails.toArray();
+    } catch (error) {
+      throw error;
+    }
+  }
     static async getByRollno(Rollno){
         try {
             const studentDetail = await StudentDetail.findOne({ rollno:Rollno});
@@ -63,9 +73,9 @@ class studentDetailsService{
                 {
                   "platform": "codechef",
                   "contest": {
-                    "codechefNoContest": 0,
-                    "codechefRating": 0,
-                    "codechefRanking": 0
+                    "codechefCurrentRating": 0,
+                    "codechefGlobalRanking": 0,
+                    "codechefStarRating" : ""
                   },
                   "problemSolved": {
                     "codechefTotal": 0
@@ -74,7 +84,7 @@ class studentDetailsService{
                 {
                   "platform": "codeforces",
                   "contest": {
-                    "codeforcesNoContest": 0,
+                    "position":"",
                     "codeforcesRating": 0
                   },
                   "problemSolved": {
@@ -82,8 +92,8 @@ class studentDetailsService{
                   }
                 }
               ]
-              const val = new StudentDetail({name:username,section:sec,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
-              return await val.save();
+              const newStudentDetail = new StudentDetail({name:username,section:sec,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
+              return await newStudentDetail.save();
             
         } catch (error) {
             throw error;

@@ -1,6 +1,6 @@
 const studentDetailsService = require('../service/studentDetailService');
 const excel = require("exceljs"); 
-const service = require('../service/studentDetailService');
+
 
 async function formateData(data,details){
   const newData = [];
@@ -20,8 +20,8 @@ async function formateData(data,details){
       }
       if(element=="codechef"){
         obj["codechefTotal"] = data[idx].codingDetails[1].problemSolved.codechefTotal;
-        obj["codechefNoContest"] = data[idx].codingDetails[1].contest.codechefNoContest;
-        obj["codechefRating"] = data[idx].codingDetails[1].contest.codechefRating;
+        obj["codechefStar"] = data[idx].codingDetails[1].contest.codechefStarRating;
+        obj["codechefRating"] = data[idx].codingDetails[1].contest.codechefCurrentRating;
       }
       if(element=="codeforces"){
         obj["codeforcesTotal"] = data[idx].codingDetails[2].problemSolved.codeforcesTotal;
@@ -63,7 +63,7 @@ async function formateColumn(obj,data){
     }
     if(value=="codechef"){
         column.push({header:"",key:"codechefTotal",width:20});
-        column.push({header:"",key:"codechefNoContest",width:20});
+        column.push({header:"",key:"codechefStar",width:20});
         column.push({header:"",key:"codechefRating",width:20});
     }
     if(value=="codeforces"){
@@ -94,7 +94,7 @@ async function createExcelWithSubcolumns(column,data,details) {
   var curIdx = 67;
   details.coding.forEach(async(value)=>{
       if(value=="leetcode"){
-          worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+3,49)}`);
+          worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+5,49)}`);
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49)}`).value = "Leetcode";
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49+1)}`).value = "Easy";
           worksheet.getCell(`${String.fromCharCode(curIdx+2,49+1)}`).value = "Medium";
@@ -107,7 +107,7 @@ async function createExcelWithSubcolumns(column,data,details) {
           worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+3,49)}`);
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49)}`).value = "CodeChef";
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49+1)}`).value = "Total Problem";
-          worksheet.getCell(`${String.fromCharCode(curIdx+2,49+1)}`).value = "No of Contest";
+          worksheet.getCell(`${String.fromCharCode(curIdx+2,49+1)}`).value = "Star rating";
           worksheet.getCell(`${String.fromCharCode(curIdx+3,49+1)}`).value = "Rating";
           curIdx+=3;
       }
