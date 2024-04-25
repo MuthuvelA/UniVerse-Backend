@@ -56,10 +56,10 @@ exports.updateStudentDetailByRollno = async (req, res) => {
 
 exports.initUserController = async(req,res)=>{
       try {
-        const {department,section,currentYear,rollNos} = req.body;
+        const {department,section,year,rollNos} = req.body;
         rollNos.forEach(async(element)=> {
             try {
-                await studentDetailService.initUser(department,currentYear,section,element.rollno,element.name,element.LeetCode,element.CodeChef,element.Codeforces);
+                await studentDetailService.initUser(department,year,section,element.rollno,element.name,element.LeetCode,element.CodeChef,element.Codeforces);
             } catch (error) {
                 console.log(error.message);
             }

@@ -93,7 +93,7 @@ async function createExcelWithSubcolumns(column,data,details) {
   worksheet.columns = column;
   var curIdx = 67;
   details.coding.forEach(async(value)=>{
-      if(value=="leetcode"){
+      if(value.toLocaleLowerCase()==="leetcode"){
           worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+5,49)}`);
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49)}`).value = "Leetcode";
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49+1)}`).value = "Easy";
@@ -103,7 +103,7 @@ async function createExcelWithSubcolumns(column,data,details) {
           worksheet.getCell(`${String.fromCharCode(curIdx+5,49+1)}`).value = "Rating";
           curIdx+=5;
       }
-      if(value=="codechef"){
+      if(value.toLocaleLowerCase()==="codechef"){
           worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+3,49)}`);
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49)}`).value = "CodeChef";
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49+1)}`).value = "Total Problem";
@@ -111,7 +111,7 @@ async function createExcelWithSubcolumns(column,data,details) {
           worksheet.getCell(`${String.fromCharCode(curIdx+3,49+1)}`).value = "Rating";
           curIdx+=3;
       }
-      if(value=="codeforces"){
+      if(value.toLocaleLowerCase()==="codeforces"){
           worksheet.mergeCells(`${String.fromCharCode(curIdx+1,49)}:${String.fromCharCode(curIdx+2,49)}`);
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49)}`).value = "CodeForces";
           worksheet.getCell(`${String.fromCharCode(curIdx+1,49+1)}`).value = "Total Problem";
@@ -130,15 +130,21 @@ return buffer.toString('base64');
 exports.GenerateExcel = async(req,res)=>{
       try {
         const details = req.body;
-        const {department,currentYear} = details;
-        const data = await studentDetailsService.getByDeptYear({department,currentYear});
+        const {username} = details;
+        console.log(details);
+        var currentYear;
+        if(parseInt(username[1])===1) currentYear = 'I';
+        else if(parseInt(username[1])===2) currentYear = "II";
+        else if(parseInt(username[1])===3) currentYear = "III";
+        else currentYear = "IV";
+        const data = await studentDetailsService.getByDeptYear({department:`${username[2]+username[3]}E`,currentYear});
         console.log("DATA  : ",data);
         const formatedData = await formateData(data,details);
         const column = await formateColumn(details,formatedData);
         const base64 = await createExcelWithSubcolumns(column,formatedData,details);
         
-        res.status(200).json({message:base64});
+        res.status(200).json({status:true,message:base64});
       } catch (error) {
-        res.status(404).json({error:error.message});
+        res.status(404).json({status:false,message:error.message});
       }
 };

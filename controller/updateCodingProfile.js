@@ -1,6 +1,5 @@
 const studentDetails = require('../service/studentDetailService');
 const codingProfileController = require('../controller/codingProfileController');
-const { validateProfile } = require("../service/codingProfileService")
 
 async function formateValue(leetcode,codechef,codeforces){
       return struct = [
@@ -44,7 +43,6 @@ async function formateValue(leetcode,codechef,codeforces){
 
 async function iterater(result){
   result.forEach(async (element)=>{
-    console.log("rollNo : ",element.rollNo);
     const leetcode = (element.leetCode!=undefined && element.leetCode!="")?await codingProfileController.addLeetcode(element.leetCode):{ 
       leetcodeNoContest: 0,
       leetcodeRating: 0,
@@ -66,22 +64,19 @@ async function iterater(result){
           "codeforcesTotal": 0
     };
     const formatedValue = await formateValue(leetcode,codechef,codeforces);
-    console.log("rollNo : ",element.rollNo,formatedValue);
     await studentDetails.updateByRollno(element.rollNo,{codingDetails:formatedValue});
     console.log("updated....!");
   });
 }
 
-exports.updateCodingProfile = async(req,res)=>{
+exports.updateCodingProfile = async()=>{
       try {
-        console.log(req.body);
         const result = await studentDetails.getAll();
-        console.log("result : ",result);
         await iterater(result);
-        res.status(200).json({message:"updated Sucessfully"});
+        // res.status(200).json({status:true,message:"updated Sucessfully"});
         
       } catch (error) {
         console.log("error : ",error.message);
-        res.status(404).json({message:error.message});
+        // res.status(404).json({status:false,message:error.message});
       }
 }

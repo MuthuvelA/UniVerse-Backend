@@ -1,4 +1,5 @@
 const StudentDetail = require('../model/studentDetailModel');
+const loginModel = require('../model/loginModel');
 const db = require('../config/db');
 
 class studentDetailsService{
@@ -96,6 +97,8 @@ class studentDetailsService{
                 }
               ]
               console.log("Year : ",year);
+              const newLogin = new loginModel({rollNo:roll,password:roll,userName:username});
+              await newLogin.save();
               const newStudentDetail = new StudentDetail({name:username,section:sec,leetCode:leetcode,codeChef:codechef,codeforces:codeforces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
               return await newStudentDetail.save();
             

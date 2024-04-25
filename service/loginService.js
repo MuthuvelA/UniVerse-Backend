@@ -1,10 +1,10 @@
-const loginModel = require('../model/loginModel');
+const db = require('../config/db');
 
 class loginService {
-    static async userLogin(Rollno,Password) {
+    static async userLogin(name,Password,col) {
         try {
-            let user;
-            user = await loginModel.findOne({ rollno: Rollno, password:Password });
+            const collection = db.collection(col);
+            const user = await collection.findOne({ username: name, password:Password});
             return user;
         } catch (err) {
             throw err;

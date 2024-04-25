@@ -3,7 +3,7 @@ const db = require('../config/db');
 
 const { Schema } = mongo;
 
-const userSchema = new Schema({
+const staffSchema = new Schema({
     userName:{
       type:String
     },
@@ -18,6 +18,6 @@ const userSchema = new Schema({
 });
 
 
-const loginModel = db.model('loginstudentdbs',userSchema);
+const loginModel = db.model('loginstaffdbs',staffSchema);
 
 module.exports = loginModel;
