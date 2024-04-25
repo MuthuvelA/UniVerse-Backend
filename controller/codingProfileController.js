@@ -3,11 +3,12 @@ const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
 
 
-async function formateLeetcode(data){
+async function formateLeetcode(data,username){
+    console.log("Formate leetcode : ",username);
     return {
-        leetcodeNoContest:data.userContestRanking.attendedContestsCount,
-        leetcodeRanking : data.userContestRanking.globalRanking,
-       leetcodeRating : data.userContestRanking.rating,
+        leetcodeNoContest:(data.userContestRanking==null)?0:data.userContestRanking.attendedContestsCount,
+        leetcodeRanking : (data.userContestRanking==null)?0:data.userContestRanking.globalRanking,
+       leetcodeRating : (data.userContestRanking==null)?0:data.userContestRanking.rating,
        leetcodeTotal : data.matchedUserStats.submitStats.acSubmissionNum[0].count,
        leetcodeEasy : data.matchedUserStats.submitStats.acSubmissionNum[1].count,
        leetcodeMedium : data.matchedUserStats.submitStats.acSubmissionNum[2].count,
@@ -16,9 +17,8 @@ async function formateLeetcode(data){
 }
 
 function formateCodechef(document){
-   const problem = parseInt(document.querySelector(".rating-data-section.problems-solved").children[0].innerHTML.match(/\((\d+)\)/)[1])+parseInt(document.querySelector(".rating-data-section.problems-solved").children[2].innerHTML.match(/\d+/)[0]);
+   const problem = (document.querySelector(".rating-data-section.problems-solved")==null)?0:parseInt(document.querySelector(".rating-data-section.problems-solved").children[0].innerHTML.match(/\((\d+)\)/)[1])+parseInt(document.querySelector(".rating-data-section.problems-solved").children[2].innerHTML.match(/\d+/)[0]);
   return {
-           codechefName: document.querySelector('.user-details-container').children[0].children[1].textContent,
            codechefCurrentRating: parseInt(document.querySelector(".rating-number").textContent),
            codecheHhighestRating: parseInt(document.querySelector(".rating-number").parentNode.children[4].textContent.split('Rating')[1]),
            codechefGlobalRanking: parseInt(document.querySelector('.rating-ranks').children[0].children[0].children[0].children[0].innerHTML),
@@ -32,8 +32,8 @@ function formateCodeforces(document){
    const newrating = Array.from(document.querySelectorAll('.user-gray'));
    return{
     codeforcesTotal:parseInt(document.querySelector('._UserActivityFrame_footer').children[0].children[0].children[0].innerHTML.match(/\d+/)[0]),
-    codeforcesRating: parseInt(newrating[6].innerHTML),
-    position: newrating[4].innerHTML.trim()
+    codeforcesRating: (newrating.length>10)?parseInt(newrating[8].innerHTML):0,
+    position: (newrating.length>7)?newrating[6].innerHTML.trim():"Unreated"
    }
 }
 
@@ -45,7 +45,7 @@ class codingPrifileController{
             "query": "query getUserProfile($username: String!) { userContestRanking(username:  $username)      {attendedContestsCount        rating        globalRanking } matchedUserStats: matchedUser(username: $username) {      submitStats: submitStatsGlobal {        acSubmissionNum {          difficulty          count          submissions  }        totalSubmissionNum {          difficulty          count          submissions     }  }    }  }", "variables": {"username": `${username}`}
         };
         const response = await axios.post('https://leetcode.com/graphql',query);
-        return (formateLeetcode(response.data.data));
+        return await (formateLeetcode(response.data.data,username));
        } catch (error) {
         console.log(error.message);
             throw error;
@@ -58,7 +58,7 @@ class codingPrifileController{
             const response = await axios.get(`https://www.codechef.com/users/${username}`);
             const dom = new JSDOM(response.data);
             const document = dom.window.document;
-            return formateCodechef(document);
+            return await  formateCodechef(document);
            } catch (error) {
             throw error;
            }
@@ -69,7 +69,7 @@ class codingPrifileController{
             const response = await axios.get(`https://codeforces.com/profile/${username}`);
             const dom = new JSDOM(response.data);
             const document = dom.window.document;
-            return formateCodeforces(document);
+            return await formateCodeforces(document);
             
         } catch (error) {
             throw error;

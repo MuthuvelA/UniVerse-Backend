@@ -59,7 +59,7 @@ exports.initUserController = async(req,res)=>{
         const {department,section,currentYear,rollNos} = req.body;
         rollNos.forEach(async(element)=> {
             try {
-                await studentDetailService.initUser(department,currentYear,section,element.rollno,element.name);
+                await studentDetailService.initUser(department,currentYear,section,element.rollno,element.name,element.LeetCode,element.CodeChef,element.Codeforces);
             } catch (error) {
                 console.log(error.message);
             }

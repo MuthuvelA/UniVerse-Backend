@@ -26,6 +26,7 @@ class validateProfile{
             const response = await axios.get(`https://codechef.com/users/${username}`);
             const document = (new JSDOM(response.data)).window.document;
             const title = document.querySelector("title").textContent;
+            console.log("Codechef : ",title);
             return title.split(" ")[0]===username;
         } catch (error) {
             throw error;
@@ -37,6 +38,7 @@ class validateProfile{
             const response = await axios.get(`https://codeforces.com/profile/${username}`);
             const document = (new JSDOM(response.data)).window.document;
             const title = document.querySelector("title").textContent;
+            console.log("codeforces : ",title);
             return title.split(" ")[0]===username;
         } catch (error) {
             throw error;

@@ -1,5 +1,6 @@
 const loginController = require('../controller/loginController');
 const studentDetailController=require('../controller/studentDetailController')
+const update  =require('../controller/updateCodingProfile');
 const router = require('express').Router();
 
 
@@ -9,5 +10,6 @@ router.post('/updatestudentdetail',studentDetailController.updateStudentDetailBy
 router.post('/getstudentbyrollno',studentDetailController.getStudentDetailByRollno);
 router.post('/getstudentbyyear',studentDetailController.getStudentDetailByYear);
 router.post('/initUser',studentDetailController.initUserController);
+router.post('/updateCoding',update.updateCodingProfile);
 
 module.exports = router;

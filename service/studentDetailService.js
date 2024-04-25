@@ -6,8 +6,10 @@ class studentDetailsService{
   static async getAll(){
     try {
       const collection = db.collection("studentdetaildbs");
-      const allDetails = await collection.find({});
-      return  await allDetails.toArray();
+      const allDetails = await collection.find();
+      const arrayAllDetails = await allDetails.toArray();
+      console.log(arrayAllDetails);
+      return  arrayAllDetails;
     } catch (error) {
       throw error;
     }
@@ -45,7 +47,8 @@ class studentDetailsService{
         try {
             const collection = db.collection("studentdetaildbs");
             const deptDetails = await collection.find(data).sort({rollNo:1});
-            return await deptDetails.toArray();
+            const arrayDeptDetails = await deptDetails.toArray();
+            return arrayDeptDetails; 
             
         } catch (error) {
             throw error;
@@ -53,7 +56,7 @@ class studentDetailsService{
     }
 
 
-    static async initUser(dept,year,sec,roll,username){
+    static async initUser(dept,year,sec,roll,username,leetcode,codechef,codeforces){
         try {
             const value = [
                 {
@@ -92,7 +95,8 @@ class studentDetailsService{
                   }
                 }
               ]
-              const newStudentDetail = new StudentDetail({name:username,section:sec,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
+              console.log("Year : ",year);
+              const newStudentDetail = new StudentDetail({name:username,section:sec,leetCode:leetcode,codeChef:codechef,codeforces:codeforces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
               return await newStudentDetail.save();
             
         } catch (error) {
