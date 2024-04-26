@@ -1,18 +1,12 @@
-const loginModel = require('../model/loginModel');
-
-const test = require('../controller/codingProfileController');
-const {validateProfile} = require('../service/codingProfileService');
+const db = require('../config/db');
 
 class loginService {
-    static async userLogin(Rollno,Password) {
+    static async userLogin(name,Password,col) {
         try {
-            let user;
-            user = await loginModel.findOne({ rollno: Rollno, password:Password });
-
-            await test.addLeetcode();
-            await test.addCodechef("kamaleshbala");
-            await test.addCodeforces("Kamalesh_bala");
-            await validateProfile.checkLeetcode("Muthuvel__A");
+            const collection = db.collection(col);
+            console.log("collection : ",col);
+            const user = await collection.findOne({ username: name, password:Password});
+            console.log("User ",user);
             return user;
         } catch (err) {
             throw err;

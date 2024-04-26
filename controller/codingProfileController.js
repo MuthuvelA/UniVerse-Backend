@@ -1,71 +1,84 @@
-const codingProfileService = require('../service/codingProfileService');
 const axios = require('axios');
 const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
 
-function formateLeetcode(data){
-     return {
-        contest:data.userContestRanking.attendedContestsCount,
-        ranking : data.userContestRanking.globalRanking,
-        rating : data.userContestRanking.rating,
-        total : data.matchedUserStats.submitStats.acSubmissionNum[0].count,
-        easy : data.matchedUserStats.submitStats.acSubmissionNum[1].count,
-        medium : data.matchedUserStats.submitStats.acSubmissionNum[2].count,
-        hard : data.matchedUserStats.submitStats.acSubmissionNum[3].count
-     }
+
+async function formateLeetcode(data,username){
+    console.log("Formate leetcode : ",username);
+    return {
+        leetcodeNoContest:(data.userContestRanking==null)?0:data.userContestRanking.attendedContestsCount,
+        leetcodeRanking : (data.userContestRanking==null)?0:data.userContestRanking.globalRanking,
+       leetcodeRating : (data.userContestRanking==null)?0:data.userContestRanking.rating,
+       leetcodeTotal : data.matchedUserStats.submitStats.acSubmissionNum[0].count,
+       leetcodeEasy : data.matchedUserStats.submitStats.acSubmissionNum[1].count,
+       leetcodeMedium : data.matchedUserStats.submitStats.acSubmissionNum[2].count,
+       leetcodeHard : data.matchedUserStats.submitStats.acSubmissionNum[3].count
+    }
 }
 
 function formateCodechef(document){
-    const problem = parseInt(document.querySelector(".rating-data-section.problems-solved").children[0].innerHTML.match(/\((\d+)\)/)[1])+parseInt(document.querySelector(".rating-data-section.problems-solved").children[2].innerHTML.match(/\d+/)[0]);
-   return {
-            name: document.querySelector('.user-details-container').children[0].children[1].textContent,
-            currentRating: parseInt(document.querySelector(".rating-number").textContent),
-            highestRating: parseInt(document.querySelector(".rating-number").parentNode.children[4].textContent.split('Rating')[1]),
-            globalRank: parseInt(document.querySelector('.rating-ranks').children[0].children[0].children[0].children[0].innerHTML),
-            countryRank: parseInt(document.querySelector('.rating-ranks').children[0].children[1].children[0].children[0].innerHTML),
-            stars: document.querySelector('.rating').textContent || "unrated",
-            totalProblem :problem
-   }
+   const problem = (document.querySelector(".rating-data-section.problems-solved")==null)?0:parseInt(document.querySelector(".rating-data-section.problems-solved").children[0].innerHTML.match(/\((\d+)\)/)[1])+parseInt(document.querySelector(".rating-data-section.problems-solved").children[2].innerHTML.match(/\d+/)[0]);
+  return {
+           codechefCurrentRating: parseInt(document.querySelector(".rating-number").textContent),
+           codecheHhighestRating: parseInt(document.querySelector(".rating-number").parentNode.children[4].textContent.split('Rating')[1]),
+           codechefGlobalRanking: parseInt(document.querySelector('.rating-ranks').children[0].children[0].children[0].children[0].innerHTML),
+           codechefCountryRank: parseInt(document.querySelector('.rating-ranks').children[0].children[1].children[0].children[0].innerHTML),
+           codechefStarRating: document.querySelector('.rating').textContent || "unrated",
+           codechefTotal :problem
+  }
 }
 
 function formateCodeforces(document){
-    const newrating = Array.from(document.querySelectorAll('.user-gray'));
-    return{
-        totalProblem:parseInt(document.querySelector('._UserActivityFrame_footer').children[0].children[0].children[0].innerHTML.match(/\d+/)[0]),
-        rating: parseInt(newrating[6].innerHTML),
-        ranking: newrating[4].innerHTML.trim()
-    }
+   const newrating = Array.from(document.querySelectorAll('.user-gray'));
+   return{
+    codeforcesTotal:parseInt(document.querySelector('._UserActivityFrame_footer').children[0].children[0].children[0].innerHTML.match(/\d+/)[0]),
+    codeforcesRating: (newrating.length>10)?parseInt(newrating[8].innerHTML):0,
+    position: (newrating.length>7)?newrating[5].innerHTML.trim():"Unreated"
+   }
 }
-exports.addLeetcode = async()=>{
-    const query ={
-        "query": "query getUserProfile($username: String!) { userContestRanking(username:  $username)      {attendedContestsCount        rating        globalRanking } matchedUserStats: matchedUser(username: $username) {      submitStats: submitStatsGlobal {        acSubmissionNum {          difficulty          count          submissions  }        totalSubmissionNum {          difficulty          count          submissions     }  }    }  }", "variables": {"username": "Gopinath77"}
-    };
-    axios.post('https://leetcode.com/graphql',query).then(response=>{
-        console.log("Leetcode : ",formateLeetcode(response.data.data));
-    }).catch(error=>{
+
+
+class codingPrifileController{
+    static async addLeetcode(username){
+       try {
+        const query ={
+            "query": "query getUserProfile($username: String!) { userContestRanking(username:  $username)      {attendedContestsCount        rating        globalRanking } matchedUserStats: matchedUser(username: $username) {      submitStats: submitStatsGlobal {        acSubmissionNum {          difficulty          count          submissions  }        totalSubmissionNum {          difficulty          count          submissions     }  }    }  }", "variables": {"username": `${username}`}
+        };
+        const response = await axios.post('https://leetcode.com/graphql',query);
+        return await (formateLeetcode(response.data.data,username));
+       } catch (error) {
         console.log(error.message);
-    })
-}
-
-
-exports.addCodechef = async(username)=>{
-        axios.get(`https://www.codechef.com/users/${username}`).then(response=>{
+            throw error;
+       }
+    }
+    
+    
+    static async addCodechef (username){
+           try {
+            const response = await axios.get(`https://www.codechef.com/users/${username}`);
             const dom = new JSDOM(response.data);
             const document = dom.window.document;
-            console.log("codechef : ",formateCodechef(document));
-               
-        }).catch(error=>{
-            console.log(error.message);
-        });
+            return await  formateCodechef(document);
+           } catch (error) {
+            throw error;
+           }
+    }
+    
+    static async addCodeforces (username){
+        try {
+            const response = await axios.get(`https://codeforces.com/profile/${username}`);
+            const dom = new JSDOM(response.data);
+            const document = dom.window.document;
+            return await formateCodeforces(document);
+            
+        } catch (error) {
+            throw error;
+        }
+        
+    }
+    
+
 }
 
-exports.addCodeforces = async(username)=>{
-    axios.get(`https://codeforces.com/profile/Kamalesh_bala`).then(response=>{
-        const dom = new JSDOM(response.data);
-        const document = dom.window.document;
-        console.log("codeforces :  ",formateCodeforces(document));
-           
-    }).catch(error=>{
-        console.log(error.message);
-    });
-}
+
+module.exports = codingPrifileController;
