@@ -43,7 +43,7 @@ async function formateValue(leetcode,codechef,codeforces){
 
 async function iterater(result){
   result.forEach(async (element)=>{
-    const leetcode = (element.leetCode!=undefined && element.leetCode!="")?await codingProfileController.addLeetcode(element.leetCode):{ 
+    const leetcode = (element.leetcode!=undefined && element.leetcode!="")?await codingProfileController.addLeetcode(element.leetcode):{ 
       leetcodeNoContest: 0,
       leetcodeRating: 0,
       leetcodeRanking: 0,
@@ -52,7 +52,7 @@ async function iterater(result){
       leetcodeMedium: 0,
       leetcodeHard: 0
     };
-    const codechef = (element.codeChef!=undefined && element.codeChef!="")?await codingProfileController.addCodechef(element.codeChef):{
+    const codechef = (element.codechef!=undefined && element.codechef!="")?await codingProfileController.addCodechef(element.codechef):{
         "codechefCurrentRating": 0,
         "codechefStarRating" : "",
         "codechefGlobalRanking": 0,
@@ -64,6 +64,7 @@ async function iterater(result){
           "codeforcesTotal": 0
     };
     const formatedValue = await formateValue(leetcode,codechef,codeforces);
+    console.log(formatedValue);
     await studentDetails.updateByRollno(element.rollNo,{codingDetails:formatedValue},"studentdetaildbs");
     console.log("updated....!");
   });

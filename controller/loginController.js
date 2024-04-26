@@ -11,6 +11,7 @@ exports.login = async (req, res) => {
         console.log("login : ",username,password);
         const user = await loginService.userLogin(username, password,collection);
         if (user) {
+            var allPost = [];
             if(type==="Student"){
                 const dept = `${username[2]+username[3]}E`;
                 console.log("login Dept : ",dept);

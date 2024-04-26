@@ -57,7 +57,7 @@ class studentDetailsService{
     }
 
 
-    static async initUser(dept,year,sec,roll,username,leetcode,codechef,codeforces){
+    static async initUser(dept,year,sec,roll,username,leet,chef,forces){
         try {
             const value = [
                 {
@@ -97,9 +97,9 @@ class studentDetailsService{
                 }
               ]
               console.log("Year : ",year);
-              const newLogin = new loginModel({rollNo:roll,password:roll,userName:username});
+              const newLogin = new loginModel({username:roll,password:roll,name:username});
               await newLogin.save();
-              const newStudentDetail = new StudentDetail({name:username,section:sec,leetCode:leetcode,codeChef:codechef,codeforces:codeforces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
+              const newStudentDetail = new StudentDetail({name:username,section:sec,leetcode:leet,codechef:chef,codeforces:forces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
               return await newStudentDetail.save();
             
         } catch (error) {

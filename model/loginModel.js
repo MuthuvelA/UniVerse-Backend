@@ -4,12 +4,13 @@ const db = require('../config/db');
 const { Schema } = mongo;
 
 const userSchema = new Schema({
-    userName:{
+    name:{
       type:String
     },
-    rollNo:{
+    rollno:{
       type:String,
-      required:true
+      required:true,
+      unique:true
     },
     password:{
         type:String,
