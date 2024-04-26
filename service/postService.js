@@ -6,7 +6,7 @@ class postService{
         try {
             const deptPost = await post.find({postType:{$in:[dept,""]}});
             return deptPost;
-        } catch (error) {
+        } catch (error){
             throw error
         }
     }

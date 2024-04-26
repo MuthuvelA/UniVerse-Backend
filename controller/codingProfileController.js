@@ -32,8 +32,8 @@ function formateCodeforces(document){
    const newrating = Array.from(document.querySelectorAll('.user-gray'));
    return{
     codeforcesTotal:parseInt(document.querySelector('._UserActivityFrame_footer').children[0].children[0].children[0].innerHTML.match(/\d+/)[0]),
-    codeforcesRating: (newrating.length>10)?parseInt(newrating[8].innerHTML):0,
-    position: (newrating.length>7)?newrating[6].innerHTML.trim():"Unreated"
+    codeforcesRating: (newrating.length>10)?parseInt(newrating[9].innerHTML):0,
+    position: (newrating.length>7)?newrating[7].innerHTML.trim():"Unreated"
    }
 }
 

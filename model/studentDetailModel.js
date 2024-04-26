@@ -50,11 +50,11 @@ const studentDetailModel = new Schema({
         type: String,
         default:""
     },
-    leetCode: {
+    leetcode: {
         type: String,
         default:""
     },
-    codeChef:{
+    codechef:{
         type: String,
         default:""
     },
@@ -63,124 +63,136 @@ const studentDetailModel = new Schema({
         default:""
     },
     aadhaarCardNumber: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     aadhaarCardLink: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     panCardNumber: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     panCardLink: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     drivingLicenseNumber: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     drivingLicenseLink: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     voterIdNumber: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     voterIdLink:  {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     passportNumber: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     passportLink: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     bankAccountNumber: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     },
     bankAccountLink: {
-        iv:{
-            type:String,
-            default:""
-        },
-        encryptedValue:{
-            type:String,
-            default:""
-        }
+        // iv:{
+        //     type:String,
+        //     default:""
+        // },
+        // encryptedValue:{
+        //     type:String,
+        //     default:""
+        // }
+        type:String
     } ,
     codingDetails:{
         type:Array

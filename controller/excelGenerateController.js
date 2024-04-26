@@ -16,7 +16,7 @@ async function formateData(data,details){
         obj["leetcodeMedium"] = data[idx].codingDetails[0].problemSolved.leetcodeMedium;
         obj["leetcodeHard"] = data[idx].codingDetails[0].problemSolved.leetcodeHard;
         obj["leetcodeNoContest"] = data[idx].codingDetails[0].contest.leetcodeNoContest;
-        obj["leetcodeRating"] = data[idx].codingDetails[0].contest.leetcodeRating;
+        obj["leetcodeRating"] = parseInt(data[idx].codingDetails[0].contest.leetcodeRating);
       }
       if(element=="codechef"){
         obj["codechefTotal"] = data[idx].codingDetails[1].problemSolved.codechefTotal;

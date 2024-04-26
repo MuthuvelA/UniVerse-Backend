@@ -64,7 +64,7 @@ async function iterater(result){
           "codeforcesTotal": 0
     };
     const formatedValue = await formateValue(leetcode,codechef,codeforces);
-    await studentDetails.updateByRollno(element.rollNo,{codingDetails:formatedValue});
+    await studentDetails.updateByRollno(element.rollNo,{codingDetails:formatedValue},"studentdetaildbs");
     console.log("updated....!");
   });
 }

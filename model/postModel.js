@@ -16,6 +16,10 @@ const postSchema = new Schema({
         type:String,
         default:""
     },
+    filter:{
+        type:Array,
+        default:[]
+    },
     postDate:{
         type:String,
         default:(new Date().toISOString())

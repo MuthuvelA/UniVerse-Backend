@@ -33,9 +33,9 @@ class studentDetailsService{
         }
     }
     
-    static async updateByRollno(rollno, updatedData){
+    static async updateByRollno(rollno, updatedData,col){
         try {
-            const collection = db.collection("studentdetaildbs");
+            const collection = db.collection(col);
             const updatedStudentDetail = await collection.updateOne({ rollNo: rollno }, {$set:updatedData});
             return updatedStudentDetail;
         } catch (error) {
