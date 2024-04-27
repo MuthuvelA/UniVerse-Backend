@@ -8,11 +8,6 @@ class loginService {
         try {
             let user;
             user = await loginModel.findOne({ rollno: Rollno, password:Password });
-
-            await test.addLeetcode();
-            await test.addCodechef("kamaleshbala");
-            await test.addCodeforces("Kamalesh_bala");
-            await validateProfile.checkLeetcode("Muthuvel__A");
             return user;
         } catch (err) {
             throw err;
