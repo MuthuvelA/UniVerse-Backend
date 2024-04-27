@@ -1,7 +1,20 @@
 const StudentDetail = require('../model/studentDetailModel');
+const loginModel = require('../model/loginModel');
 const db = require('../config/db');
 
 class studentDetailsService{
+
+  static async getAll(){
+    try {
+      const collection = db.collection("studentdetaildbs");
+      const allDetails = await collection.find();
+      const arrayAllDetails = await allDetails.toArray();
+      console.log(arrayAllDetails);
+      return  arrayAllDetails;
+    } catch (error) {
+      throw error;
+    }
+  }
     static async getByRollno(Rollno){
         try {
             const studentDetail = await StudentDetail.findOne({ rollno:Rollno});
@@ -20,9 +33,9 @@ class studentDetailsService{
         }
     }
     
-    static async updateByRollno(rollno, updatedData){
+    static async updateByRollno(rollno, updatedData,col){
         try {
-            const collection = db.collection("studentdetaildbs");
+            const collection = db.collection(col);
             const updatedStudentDetail = await collection.updateOne({ rollNo: rollno }, {$set:updatedData});
             return updatedStudentDetail;
         } catch (error) {
@@ -35,7 +48,8 @@ class studentDetailsService{
         try {
             const collection = db.collection("studentdetaildbs");
             const deptDetails = await collection.find(data).sort({rollNo:1});
-            return await deptDetails.toArray();
+            const arrayDeptDetails = await deptDetails.toArray();
+            return arrayDeptDetails; 
             
         } catch (error) {
             throw error;
@@ -43,7 +57,7 @@ class studentDetailsService{
     }
 
 
-    static async initUser(dept,year,sec,roll,username){
+    static async initUser(dept,year,sec,roll,username,leet,chef,forces){
         try {
             const value = [
                 {
@@ -63,9 +77,9 @@ class studentDetailsService{
                 {
                   "platform": "codechef",
                   "contest": {
-                    "codechefNoContest": 0,
-                    "codechefRating": 0,
-                    "codechefRanking": 0
+                    "codechefCurrentRating": 0,
+                    "codechefGlobalRanking": 0,
+                    "codechefStarRating" : ""
                   },
                   "problemSolved": {
                     "codechefTotal": 0
@@ -74,7 +88,7 @@ class studentDetailsService{
                 {
                   "platform": "codeforces",
                   "contest": {
-                    "codeforcesNoContest": 0,
+                    "position":"",
                     "codeforcesRating": 0
                   },
                   "problemSolved": {
@@ -82,8 +96,11 @@ class studentDetailsService{
                   }
                 }
               ]
-              const val = new StudentDetail({name:username,section:sec,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
-              return await val.save();
+              console.log("Year : ",year);
+              const newLogin = new loginModel({username:roll,password:roll,name:username});
+              await newLogin.save();
+              const newStudentDetail = new StudentDetail({name:username,section:sec,leetcode:leet,codechef:chef,codeforces:forces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
+              return await newStudentDetail.save();
             
         } catch (error) {
             throw error;

@@ -32,12 +32,18 @@ exports.getStudentDetailByYear = async (req, res) => {
 
 exports.updateStudentDetailByRollno = async (req, res) => {
     try {
-        const updatedStudentDetail = await studentDetailService.updateByRollno(req.body.rollNo, req.body.value);
+        var collection = "studentdetaildbs";
+        const {type,value} = req.body;
+        if(type==="Teacher") collection = "staffdetaildbs";
+
+        const detail = {...value.coding,...value.personal};
+        const updatedStudentDetail = await studentDetailService.updateByRollno(req.body.username,detail,collection);
         if (updatedStudentDetail) {
-            res.status(200).json(updatedStudentDetail);
+            res.status(200).json({status:true,message:updatedStudentDetail});
         } else {
             res.status(404).json({ status: false, message: "Student detail not found" });
         }
+        console.log("update value",detail);
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: false, message: "Server error" });
@@ -47,10 +53,10 @@ exports.updateStudentDetailByRollno = async (req, res) => {
 
 exports.initUserController = async(req,res)=>{
       try {
-        const {department,section,currentYear,rollNos} = req.body;
+        const {department,section,year,rollNos} = req.body;
         rollNos.forEach(async(element)=> {
             try {
-                await studentDetailService.initUser(department,currentYear,section,element.rollno,element.name);
+                await studentDetailService.initUser(department,year,section,element.rollno,element.name,element.LeetCode,element.CodeChef,element.Codeforces);
             } catch (error) {
                 console.log(error.message);
             }
