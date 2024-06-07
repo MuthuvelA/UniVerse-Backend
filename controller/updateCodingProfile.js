@@ -57,7 +57,7 @@ async function iterater(result){
         leetcodeHard: 0
       };
     }catch(err){
-      invalidUserData.invalidUsername.push({platform:"leetcode",userName:element.leetcode});
+      invalidUserName.push({platform:"leetcode",userName:element.leetcode});
        leetcode = {
         leetcodeNoContest: 0,
         leetcodeRating: 0,
