@@ -1,6 +1,7 @@
 const axios = require('axios');
 const jsdom = require('jsdom');
-const {JSDOM} = jsdom;
+const {JSDOM} = jsdom; 
+const {validateProfile} =  require('../service/codingProfileService');
 
 
 async function formateLeetcode(data,username){
@@ -69,6 +70,7 @@ class codingPrifileController{
         const query ={
             "query": "query getUserProfile($username: String!) { userContestRanking(username:  $username)      {attendedContestsCount        rating        globalRanking } matchedUserStats: matchedUser(username: $username) {      submitStats: submitStatsGlobal {        acSubmissionNum {          difficulty          count          submissions  }        totalSubmissionNum {          difficulty          count          submissions     }  }    }  }", "variables": {"username": `${username}`}
         };
+        await validateProfile.checkLeetcode(username);
         const response = await axios.post('https://leetcode.com/graphql',query);
         return await (formateLeetcode(response.data.data,username));
        } catch (error) {
@@ -80,6 +82,7 @@ class codingPrifileController{
     
     static async addCodechef (username){
            try {
+            await validateProfile.checkcodeChef(username);
             const response = await axios.get(`https://www.codechef.com/users/${username}`);
             const dom = new JSDOM(response.data);
             const document = dom.window.document;
@@ -91,6 +94,7 @@ class codingPrifileController{
     
     static async addCodeforces (username){
         try {
+            await validateProfile.checkCodeforces(username); 
             const response = await axios.get(`https://codeforces.com/profile/${username}`);
             const dom = new JSDOM(response.data);
             const document = dom.window.document;

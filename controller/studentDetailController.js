@@ -1,4 +1,5 @@
 const studentDetailService = require('../service/studentDetailService');
+const { iterater } = require('./updateCodingProfile');
 
 exports.getAllStudentDetails = async (req, res) => {
     try {
@@ -13,9 +14,9 @@ exports.getAllStudentDetails = async (req, res) => {
 exports.getStudentDetailByRollno = async (req, res) => {
     try {
         
-        const studentDetail = await studentDetailService.getByRollno(req.body.rollno);
-        if (studentDetail) {
-            res.status(200).json(studentDetail);
+        const userDetails = await studentDetailService.getByRollno(req.body.rollNo);
+        if (userDetails) {
+            res.status(200).json({status:true,userDetails});
         } else {
             res.status(404).json({ status: false, message: "Student detail not found" });
         }
@@ -46,7 +47,9 @@ exports.updateStudentDetailByRollno = async (req, res) => {
         if(type==="Teacher") collection = "staffdetaildbs";
 
         const detail = {...value.coding,...value.personal};
+        // console.log(detail);
         const updatedStudentDetail = await studentDetailService.updateByRollno(req.body.username,detail,collection);
+        await iterater([detail]);
         if (updatedStudentDetail) {
             res.status(200).json({status:true,message:updatedStudentDetail});
         } else {

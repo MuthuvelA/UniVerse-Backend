@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const userDetails = require('../model/studentDetailModel');
 
 class loginService {
     static async userLogin(name,Password,col) {
@@ -11,7 +12,16 @@ class loginService {
         } catch (err) {
             throw err;
         }
-    }   
+    }  
+    
+    static async getUserDetail(rollNo){
+        try {
+            const data = await userDetails.findOne({rollNo});
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = loginService;

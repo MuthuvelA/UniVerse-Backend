@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
         var collection = "loginstudentdbs";
         console.log(type);
         if(type==="Teacher")  collection = "loginstaffdbs";
-        if(type==="admin") collection = "loginadmindbs";
+        if(type==="Admin") collection = "loginadmindbs";
         console.log("login : ",username,password);
         const user = await loginService.userLogin(username, password,collection);
         if (user) {
@@ -16,7 +16,13 @@ exports.login = async (req, res) => {
                 const dept = `${username[2]+username[3]}E`;
                 console.log("login Dept : ",dept);
                  allPost = await postService.getpost(dept);
+                 console.log("post : ",allPost);
             }
+            if(type==='Student'){
+                const userDetails = await loginService.getUserDetail(username);
+                console.log("userDetails ",userDetails);
+            res.json({ status: true, message: "Login successful",post:allPost,userDetails});
+            }else
             res.json({ status: true, message: "Login successful",post:allPost});
         } else {
             res.status(401).json({ status: false, message: "Invalid credentials"});

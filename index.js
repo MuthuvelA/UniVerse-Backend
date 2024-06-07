@@ -1,11 +1,11 @@
 const app = require("./app");
 const db = require('./config/db');
 const schedule = require('node-schedule');
-const updateCodingProfile  = require('./controller/updateCodingProfile');
+const {updateCodingProfile}  = require('./controller/updateCodingProfile');
 const port = process.env.PORT || 3002;
-schedule.scheduleJob('0 22 15 * * *',async()=>{
+schedule.scheduleJob('0 54 22 * * *',async()=>{
     console.log("shedule start at : ",Date.now());
-     await updateCodingProfile.updateCodingProfile();
+     await updateCodingProfile();
      console.log("Job Canceled..!");
      schedule.cancelJob();
 });

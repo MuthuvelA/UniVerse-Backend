@@ -9,15 +9,15 @@ class studentDetailsService{
       const collection = db.collection("studentdetaildbs");
       const allDetails = await collection.find();
       const arrayAllDetails = await allDetails.toArray();
-      console.log(arrayAllDetails);
       return  arrayAllDetails;
     } catch (error) {
       throw error;
     }
   }
-    static async getByRollno(Rollno){
+    static async getByRollno(rollNo){
         try {
-            const studentDetail = await StudentDetail.findOne({ rollno:Rollno});
+            const studentDetail = await StudentDetail.findOne({ rollNo});
+            console.log("get By roll No : ",studentDetail);
             return studentDetail;
         } catch (error) {
             throw error;
