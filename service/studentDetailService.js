@@ -16,8 +16,7 @@ class studentDetailsService{
   }
     static async getByRollno(rollNo){
         try {
-            const studentDetail = await StudentDetail.findOne({ rollNo});
-            console.log("get By roll No : ",studentDetail);
+            const studentDetail = await StudentDetail.findOne({rollNo});
             return studentDetail;
         } catch (error) {
             throw error;
@@ -96,7 +95,6 @@ class studentDetailsService{
                   }
                 }
               ]
-              console.log("Year : ",year);
               const newLogin = new loginModel({username:roll,password:roll,name:username});
               await newLogin.save();
               const newStudentDetail = new StudentDetail({name:username,section:sec,leetcode:leet,codechef:chef,codeforces:forces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});

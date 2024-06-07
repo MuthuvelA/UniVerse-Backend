@@ -4,6 +4,10 @@ const mongo = require('mongoose');
 const {Schema} = mongo;
 
 const postSchema = new Schema({
+    username:{
+        type:String,
+        default:""
+    },
     title:{
         type:String,
         default:""
@@ -12,17 +16,26 @@ const postSchema = new Schema({
         type:String,
         default:""
     },
-    postType:{
+    filter:{
         type:String,
         default:""
-    },
-    filter:{
-        type:Array,
-        default:[]
     },
     postDate:{
         type:String,
         default:(new Date().toISOString())
+    },
+    link:{
+        type:String,
+        default:""
+    },
+    createdAt:{
+        type: Date, 
+        default: Date.now
+    },
+    sessionExpiresAt:{
+        type:Date,
+        expires: 60,
+        default:Date.now
     }
 });
 

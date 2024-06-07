@@ -10,11 +10,12 @@ exports.validateLeetcode = async(req,res)=>{
             console.log("true");
             res.status(200).json({status:true,message:"username found and updated"});
         }else{
-            console.log("waste");
-            res.status(404).json({status:false,message:"Username Not found"});
+            console.log("false");
+            res.status(400).json({status:false,message:"Username Not found"});
         }
     } catch (error) {
-        res.status(404).json({status:false,message:error.message});
+        console.log("false");
+        res.status(400).json({status:false,message:error.message});
     }
 }
 
@@ -23,11 +24,16 @@ exports.validateCodechef = async(req,res)=>{
     const {username,rollNo} = req.body;
     try {
         if(await validateProfile.checkcodeChef(username)){
+            console.log("true");
              res.status(200).json({status:true,message:"username found"});
         }
-        else res.status(404).json({status:false,message:"Username Not found"});
+        else{
+             console.log("else");
+             res.status(400).json({status:false,message:"Username Not found"});
+            }
     } catch (error) {
-        res.status(404).json({status:false,message:error.message});
+        console.log("false");
+        res.status(400).json({status:false,message:error.message});
     }
 }
 
@@ -35,10 +41,12 @@ exports.validateCodeforces  =async(req,res)=>{
     const {username,rollNo}  =req.body;
     try {
         if(await validateProfile.checkCodeforces(username)){
+            console.log("true");
             res.status(200).json({status:true,message:"username found"});
     }
-        else res.status(404).json({Status:false,message:"Username Not found"}); 
+        else res.status(400).json({status:false,message:"Username Not found"}); 
     } catch (error) {
-        res.status(404).json({status:false,message:error.message});
+        console.log("false");
+        res.status(400).json({status:false,message:error.message});
     }
 }

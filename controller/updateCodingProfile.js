@@ -99,7 +99,7 @@ async function iterater(result){
       }
     }
       const formatedValue = await formateValue(leetcode,codechef,codeforces);
-      console.log("INvalid data : " ,invalidUserName);
+      console.log("Invalid data : " ,invalidUserName);
       await studentDetails.updateByRollno(element.rollNo,{codingDetails:formatedValue,invalidUserName},"studentdetaildbs");
       console.log("updated....!");
 });

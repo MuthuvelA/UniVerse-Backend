@@ -5,22 +5,19 @@ exports.login = async (req, res) => {
     try {
         const { username, password ,type} = req.body;
         var collection = "loginstudentdbs";
-        console.log(type);
         if(type==="Teacher")  collection = "loginstaffdbs";
         if(type==="Admin") collection = "loginadmindbs";
-        console.log("login : ",username,password);
-        const user = await loginService.userLogin(username, password,collection);
+        console.log(type + "  login : ",username,password);
+        const user = await loginService.userLogin(username, password,collection); 
         if (user) {
             var allPost = [];
             if(type==="Student"){
                 const dept = `${username[2]+username[3]}E`;
                 console.log("login Dept : ",dept);
                  allPost = await postService.getpost(dept);
-                 console.log("post : ",allPost);
             }
             if(type==='Student'){
                 const userDetails = await loginService.getUserDetail(username);
-                console.log("userDetails ",userDetails);
             res.json({ status: true, message: "Login successful",post:allPost,userDetails});
             }else
             res.json({ status: true, message: "Login successful",post:allPost});
