@@ -7,7 +7,7 @@ const router = require('express').Router();
 router.post('/login', loginController.login);
 router.post('/getstudentdetail',studentDetailController.getAllStudentDetails);
 router.post('/updateStudentDetail',studentDetailController.updateStudentDetailByRollno);
-router.post('/getstudentbyrollno',studentDetailController.getStudentDetailByRollno);
+router.post('/getStudentbyRollno',studentDetailController.getStudentDetailByRollno);
 router.post('/getstudentbyyear',studentDetailController.getStudentDetailByYear);
 router.post('/initUser',studentDetailController.initUserController);
 router.post('/updateCoding',update.updateCodingProfile);

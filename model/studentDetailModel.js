@@ -196,6 +196,18 @@ const studentDetailModel = new Schema({
     } ,
     codingDetails:{
         type:Array
+    },
+    invalidUserName:{
+        type:Array,
+        default:[]
+    },
+    isPlaced:{
+        type:Boolean,
+        default : false
+    },
+    isIntern:{
+        type:Boolean,
+        default : false
     }
 });
 

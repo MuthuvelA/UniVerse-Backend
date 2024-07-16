@@ -4,7 +4,7 @@ const post = require('../model/postModel');
 class postService{
     static async getpost(dept){
         try {
-            const deptPost = await post.find({postType:{$in:[dept,""]}});
+            const deptPost = await post.find({filter:{$in:[dept,"*"]}});
             return deptPost;
         } catch (error){
             throw error

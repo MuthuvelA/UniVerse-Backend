@@ -9,15 +9,14 @@ class studentDetailsService{
       const collection = db.collection("studentdetaildbs");
       const allDetails = await collection.find();
       const arrayAllDetails = await allDetails.toArray();
-      console.log(arrayAllDetails);
       return  arrayAllDetails;
     } catch (error) {
       throw error;
     }
   }
-    static async getByRollno(Rollno){
+    static async getByRollno(rollNo){
         try {
-            const studentDetail = await StudentDetail.findOne({ rollno:Rollno});
+            const studentDetail = await StudentDetail.findOne({rollNo});
             return studentDetail;
         } catch (error) {
             throw error;
@@ -96,7 +95,6 @@ class studentDetailsService{
                   }
                 }
               ]
-              console.log("Year : ",year);
               const newLogin = new loginModel({username:roll,password:roll,name:username});
               await newLogin.save();
               const newStudentDetail = new StudentDetail({name:username,section:sec,leetcode:leet,codechef:chef,codeforces:forces,rollNo:roll,currentYear:year,department:dept,codingDetails:value});
