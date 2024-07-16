@@ -200,6 +200,14 @@ const studentDetailModel = new Schema({
     invalidUserName:{
         type:Array,
         default:[]
+    },
+    isPlaced:{
+        type:Boolean,
+        default : false
+    },
+    isIntern:{
+        type:Boolean,
+        default : false
     }
 });
 

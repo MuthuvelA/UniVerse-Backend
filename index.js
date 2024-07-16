@@ -1,13 +1,11 @@
 const app = require("./app");
 const db = require('./config/db');
 const schedule = require('node-schedule');
-const LeaderBoardService = require('./service/leaderBoardService')
 const {updateCodingProfile}  = require('./controller/updateCodingProfile');
 const port = process.env.PORT || 3002;
-schedule.scheduleJob('0 33 11 * * *',async()=>{
+schedule.scheduleJob('20 49 10 * * *',async()=>{
     console.log("shedule start at : ",Date.now());
-    //  await updateCodingProfile();
-    await LeaderBoardService.getLeaderBodardByProblem();
+     await updateCodingProfile();
      console.log("Job Canceled..!");
      schedule.cancelJob();
 });
